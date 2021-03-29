@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.car.rental.mapper.CarModelInfoMapper">
+  <resultMap id="BaseResultMap" type="com.car.rental.entity.CarModelInfo">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="car_model" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="color" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="level" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="manufacturer" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="rent_price" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, car_model, color, level, manufacturer, rent_price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from car_model_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from car_model_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.car.rental.entity.CarModelInfo">
+    insert into car_model_info (id, car_model, color, 
+      level, manufacturer, rent_price
+      )
+    values (#{id,jdbcType=INTEGER}, #{carModel,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, 
+      #{level,jdbcType=VARCHAR}, #{manufacturer,jdbcType=VARCHAR}, #{rentPrice,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.car.rental.entity.CarModelInfo">
+    insert into car_model_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="carModel != null">
+        car_model,
+      </if>
+      <if test="color != null">
+        color,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="manufacturer != null">
+        manufacturer,
+      </if>
+      <if test="rentPrice != null">
+        rent_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="carModel != null">
+        #{carModel,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturer != null">
+        #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="rentPrice != null">
+        #{rentPrice,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.car.rental.entity.CarModelInfo">
+    update car_model_info
+    <set>
+      <if test="carModel != null">
+        car_model = #{carModel,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null">
+        color = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="manufacturer != null">
+        manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      </if>
+      <if test="rentPrice != null">
+        rent_price = #{rentPrice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.car.rental.entity.CarModelInfo">
+    update car_model_info
+    set car_model = #{carModel,jdbcType=VARCHAR},
+      color = #{color,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      manufacturer = #{manufacturer,jdbcType=VARCHAR},
+      rent_price = #{rentPrice,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

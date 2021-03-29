@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.car.rental.mapper.CarOrderMapper">
+  <resultMap id="BaseResultMap" type="com.car.rental.entity.CarOrder">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="car_model" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="rent_start_date" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="rent_end_date" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="userid" javaType="java.lang.Long" jdbcType="BIGINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, car_model, rent_start_date, rent_end_date, userid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from car_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from car_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.car.rental.entity.CarOrder">
+    insert into car_order (id, car_model, rent_start_date, 
+      rent_end_date, userid)
+    values (#{id,jdbcType=BIGINT}, #{carModel,jdbcType=BIGINT}, #{rentStartDate,jdbcType=DATE}, 
+      #{rentEndDate,jdbcType=DATE}, #{userid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.car.rental.entity.CarOrder">
+    insert into car_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="carModel != null">
+        car_model,
+      </if>
+      <if test="rentStartDate != null">
+        rent_start_date,
+      </if>
+      <if test="rentEndDate != null">
+        rent_end_date,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="carModel != null">
+        #{carModel,jdbcType=BIGINT},
+      </if>
+      <if test="rentStartDate != null">
+        #{rentStartDate,jdbcType=DATE},
+      </if>
+      <if test="rentEndDate != null">
+        #{rentEndDate,jdbcType=DATE},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.car.rental.entity.CarOrder">
+    update car_order
+    <set>
+      <if test="carModel != null">
+        car_model = #{carModel,jdbcType=BIGINT},
+      </if>
+      <if test="rentStartDate != null">
+        rent_start_date = #{rentStartDate,jdbcType=DATE},
+      </if>
+      <if test="rentEndDate != null">
+        rent_end_date = #{rentEndDate,jdbcType=DATE},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.car.rental.entity.CarOrder">
+    update car_order
+    set car_model = #{carModel,jdbcType=BIGINT},
+      rent_start_date = #{rentStartDate,jdbcType=DATE},
+      rent_end_date = #{rentEndDate,jdbcType=DATE},
+      userid = #{userid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getCarOrderByUserId"  resultType="com.car.rental.entity.CarOrder">
+    select
+    <include refid="Base_Column_List" />
+    from car_order
+    where userid = #{userid,jdbcType=BIGINT}
+  </select>
+</mapper>
